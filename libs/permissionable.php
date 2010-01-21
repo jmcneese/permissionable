@@ -8,25 +8,23 @@
  * @package     permissionable
  * @subpackage  permissionable.libs
  * @author      Joshua McNeese <jmcneese@gmail.com>
- * @license		Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
- * @copyright	Copyright (c) 2009,2010 Joshua M. McNeese, Curtis J. Beeson
  */
 final class Permissionable {
 
 	/**
 	 * @var mixed
 	 */
-	public static $user_id		= null;
+	public static $user_id = 0;
 
 	/**
 	 * @var mixed
 	 */
-	public static $group_id		= null;
+	public static $group_id	= 0;
 
 	/**
 	 * @var mixed
 	 */
-	public static $group_ids	= null;
+	public static $group_ids = 0;
 
 	/**
 	 * @return void

@@ -8,8 +8,6 @@
  * @package     permissionable
  * @subpackage  permissionable.models.behaviors
  * @author      Joshua McNeese <jmcneese@gmail.com>
- * @license		Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
- * @copyright	Copyright (c) 2009,2010 Joshua M. McNeese, Curtis J. Beeson
  */
 final class PermissionableBehavior extends ModelBehavior {
 
@@ -257,51 +255,29 @@ final class PermissionableBehavior extends ModelBehavior {
 
 		}
 
-		$user_id	= Permissionable::getUserId();
-		$group_ids	= Permissionable::getGroupIds();
+		$alias = $this->getPermissionAlias($Model);
 
-		if(empty($user_id) || empty($group_ids)) {
-
-			/**
-			 * if somehow the user id / group id are not defined, modify the
-			 * conditions to always return nothing, as it is safe to assume
-			 * the user is not logged in or up to naughtiness
-			 */
-			$queryData['conditions'] = '1=0';
-
-		} else {
-
-			$alias = $this->getPermissionAlias($Model);
-
-			if(empty($queryData['fields'])) {
-				$queryData['fields'] = array("{$Model->alias}.*");
-			}
-
-			$queryData['fields'] = Set::merge(
-				$queryData['fields'],
-				array(
-					"{$alias}.*"
-				)
-			);
-
-			$queryData['joins'][] = array(
-				'type'			=> 'INNER',
-				'alias'			=> $alias,
-				'table'			=> $Model->{$alias}->table,
-				'conditions'	=> array(
-					"{$alias}.model" => "{$Model->alias}",
-					"{$alias}.foreign_id = {$Model->alias}.{$Model->primaryKey}"
-				)
-			);
-
-			$queryData['conditions'] = Set::merge(
-				$queryData['conditions'],
-				array(
-					'or' => $this->_getPermissionQuery($Model)
-				)
-			);
-
+		if(empty($queryData['fields'])) {
+			$queryData['fields'] = array("{$Model->alias}.*");
 		}
+
+		$queryData['fields'] = Set::merge(
+			$queryData['fields'],
+			array(
+				"{$alias}.*"
+			)
+		);
+
+		$queryData['joins'][] = array(
+			'type'			=> 'INNER',
+			'alias'			=> $alias,
+			'table'			=> $Model->{$alias}->table,
+			'conditions'	=> array(
+				"{$alias}.model" => "{$Model->alias}",
+				"{$alias}.foreign_id = {$Model->alias}.{$Model->primaryKey}",
+				'or' => $this->_getPermissionQuery($Model)
+			)
+		);
 
 		return $queryData;
 
