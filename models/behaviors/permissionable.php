@@ -235,11 +235,17 @@ final class PermissionableBehavior extends ModelBehavior {
 	public function beforeFind(&$Model, $queryData) {
 
 		if(
-			isset($queryData['permissionable']) &&
-			$queryData['permissionable'] == false
+			(
+				isset($queryData['permissionable']) &&
+				$queryData['permissionable'] == false
+			) || (
+				isset($queryData['conditions']['permissionable']) &&
+				$queryData['conditions']['permissionable'] == false
+			)
 		) {
 
-			unset($queryData['permissionable']);
+			@(unset)$queryData['permissionable'];
+			@(unset)$queryData['conditions']['permissionable'];
 
 			$this->_unbind($Model);
 
