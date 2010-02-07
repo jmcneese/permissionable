@@ -5,14 +5,14 @@ Metadata provides row level permissions to a CakePHP application that mimic the 
 ## Installation
 
 * checkout the code
-    $ cd /path/to/your/app/plugins && git clone git://github.com/jmcneese/permissionable.git
+        $ cd /path/to/your/app/plugins && git clone git://github.com/jmcneese/permissionable.git
 * create needed schema
-    $ cake schema create Permissionable.permission
+        $ cake schema create Permissionable.permission
 * add the component to needed controllers (or AppController)
-    public $components = array('Permissionable.Permissionable');
+        public $components = array('Permissionable.Permissionable');
 * modify permissionable/controllers/components/permissionable.php to set user_id, primary group_id and secondary group_ids, so Permissionable knows who the logged in user is
 * add the behavior to needed models (or AppModel)
-    public $actsAs = array('Permissionable.Permissionable' => array('defaultBits'=>480);
+        public $actsAs = array('Permissionable.Permissionable' => array('defaultBits'=>480);
 
 ## Documentation
 
