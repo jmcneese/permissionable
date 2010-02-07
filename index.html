@@ -67,7 +67,7 @@
 				</li>
 				<li>
 					create the required db table.  you can either do this via the SQL files included in permissionable/config/schema (there are two, those who prefer UUID ids, and those who prefer INT), or you can use the schema shell to do this:
-					<pre>$ cake schema create Permissionable.permission[/sourcecode]</pre>
+					<pre>$ cake schema create Permissionable.permission</pre>
 				</li>
 				<li>
 					take a look at <a title="permissionable.php" href="http://github.com/jmcneese/permissionable/blob/1.1/controllers/components/permissionable.php">permissionable/controllers/components/permissionable.php</a>.  you'll need to include this in the components array for whichever controllers use your permissioned models, or in AppController.
