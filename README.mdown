@@ -1,0 +1,27 @@
+# Permissionable Plugin for CakePHP 1.3+
+
+Metadata provides row level permissions to a CakePHP application that mimic the UNIX filesystem methods by providing owner, group and other permission levels.
+
+## Installation
+
+* checkout the code
+    $ cd /path/to/your/app/plugins && git clone git://github.com/jmcneese/permissionable.git
+* create needed schema
+    $ cake schema create Permissionable.permission
+* add the component to needed controllers (or AppController)
+    public $components = array('Permissionable.Permissionable');
+* modify permissionable/controllers/components/permissionable.php to set user_id, primary group_id and secondary group_ids, so Permissionable knows who the logged in user is
+* add the behavior to needed models (or AppModel)
+    public $actsAs = array('Permissionable.Permissionable' => array('defaultBits'=>480);
+
+## Documentation
+
+Further documentation including additional configuration and ways of Permissionable can be found [here](http://jmcneese.github.com/permissionable) and [here](http://jmcneese.wordpress.com/2010/01/28/rmac-is-dead-long-live-rmac/).
+
+## Reporting issues
+
+If you have any issues with Permissionable please open a ticket on the [github issue tracker](http://github.com/jmcneese/permissionable/issues)
+
+## Contributing
+
+If you'd like to contribute to Permissionable, feel free to fork the project and submit patches!
