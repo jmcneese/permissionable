@@ -16,7 +16,7 @@ Metadata provides row level permissions to a CakePHP application that mimic the 
 
 ## Documentation
 
-Further documentation including additional configuration and ways of Permissionable can be found [here](http://jmcneese.github.com/permissionable) and [here](http://jmcneese.wordpress.com/2010/01/28/rmac-is-dead-long-live-rmac/).
+Further documentation including additional ways of configuring Permissionable can be found [here](http://jmcneese.github.com/permissionable) and [here](http://jmcneese.wordpress.com/2010/01/28/rmac-is-dead-long-live-rmac/).
 
 ## Reporting issues
 
