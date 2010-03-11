@@ -280,7 +280,7 @@ final class PermissionableBehavior extends ModelBehavior {
 			'table'			=> $Model->{$alias}->table,
 			'conditions'	=> array(
 				"{$alias}.model" => "{$Model->alias}",
-				"{$alias}.foreign_id = {$Model->alias}.{$Model->primaryKey}",
+				"{$alias}.foreign_id" => "{$Model->alias}.{$Model->primaryKey}",
 				'or' => $this->_getPermissionQuery($Model)
 			)
 		);
