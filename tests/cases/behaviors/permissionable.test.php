@@ -44,7 +44,7 @@ final class PermissionableTestCase extends CakeTestCase {
         parent::start();
 
         $this->Thing = ClassRegistry::init('Permissionable.Thing');
-        
+
     }
 
     /**
@@ -56,7 +56,7 @@ final class PermissionableTestCase extends CakeTestCase {
 
         $this->assertIsA($this->Thing, 'Model');
         $this->assertTrue($this->Thing->Behaviors->attached('Permissionable'));
-        
+
     }
 
     /**
@@ -81,7 +81,7 @@ final class PermissionableTestCase extends CakeTestCase {
         ));
         $this->assertTrue($result3);
         $this->assertTrue(Set::matches('/Thing[name=Gadget]', $result3));
-        
+
     }
 
     /**
@@ -190,7 +190,7 @@ final class PermissionableTestCase extends CakeTestCase {
             )
         ));
         $this->assertTrue($result9);
-        
+
     }
 
     /**
@@ -233,7 +233,7 @@ final class PermissionableTestCase extends CakeTestCase {
 
         $result3 = $this->Thing->delete();
         $this->assertFalse($result3);
-        
+
     }
 
     /**
@@ -242,8 +242,6 @@ final class PermissionableTestCase extends CakeTestCase {
      * @return  void
      */
     public function testFindMixed() {
-        return true;
-
 
         Permissionable::setUserId(2);
         Permissionable::setGroupId(2);
@@ -277,7 +275,7 @@ final class PermissionableTestCase extends CakeTestCase {
 
         $result3 = $this->Thing->find('all');
         $this->assertFalse($result3);
-        
+
     }
 
     /**
@@ -286,7 +284,6 @@ final class PermissionableTestCase extends CakeTestCase {
      * @return  void
      */
     public function testHasPermission() {
-        return true;
 
         Permissionable::setUserId(2);
         Permissionable::setGroupId(2);
@@ -319,7 +316,7 @@ final class PermissionableTestCase extends CakeTestCase {
 
         $result3 = $this->Thing->hasPermission('read');
         $this->assertTrue($result3);
-        
+
     }
 
     /**
@@ -328,8 +325,6 @@ final class PermissionableTestCase extends CakeTestCase {
      * @return  void
      */
     public function testGetPermission() {
-
-        return true;
 
         Permissionable::setUserId(2);
         Permissionable::setGroupId(2);
@@ -353,7 +348,7 @@ final class PermissionableTestCase extends CakeTestCase {
         $this->Thing->id = null;
         $result2 = $this->Thing->getPermission();
         $this->assertFalse($result2);
-        
+
     }
 
 }
