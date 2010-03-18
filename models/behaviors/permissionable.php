@@ -38,6 +38,13 @@ final class PermissionableBehavior extends ModelBehavior {
     );
 
     /**
+     * disable Permissionable
+     *
+     * @var boolean
+     */
+    private $_disabled = false;
+
+    /**
      * bind the permission model to the model in question
      *
      * @param  object	$Model
@@ -62,7 +69,7 @@ final class PermissionableBehavior extends ModelBehavior {
                 )
             )
         ), false);
-        
+
     }
 
     /**
@@ -78,7 +85,7 @@ final class PermissionableBehavior extends ModelBehavior {
         return (empty($action) || !defined("self::$action"))
             ? 0
             : constant("self::$action");
-        
+
     }
 
     /**
@@ -110,7 +117,7 @@ final class PermissionableBehavior extends ModelBehavior {
                 "$alias.uid" => Permissionable::getUserId()
             )
         );
-        
+
     }
 
     /**
@@ -124,7 +131,7 @@ final class PermissionableBehavior extends ModelBehavior {
             Permissionable::getUserId() == 1 ||
             in_array(1, Permissionable::getGroupIds())
         );
-        
+
     }
 
     /**
@@ -140,7 +147,7 @@ final class PermissionableBehavior extends ModelBehavior {
                 $this->getPermissionAlias($Model)
             )
         ), false);
-        
+
     }
 
     /**
@@ -160,6 +167,12 @@ final class PermissionableBehavior extends ModelBehavior {
      * @return boolean
      */
     public function afterSave( & $Model, $created) {
+
+    	if ($this->_disabled) {
+
+    		return true;
+
+    	}
 
         $user_id	= Permissionable::getUserId();
         $group_id	= Permissionable::getGroupId();
@@ -204,7 +217,7 @@ final class PermissionableBehavior extends ModelBehavior {
         }
 
         return $Model->{$alias}->save($data);
-        
+
     }
 
     /**
@@ -217,8 +230,14 @@ final class PermissionableBehavior extends ModelBehavior {
      */
     public function beforeDelete( & $Model) {
 
+        if ($this->_disabled) {
+
+        	return true;
+
+        }
+
         return $this->hasPermission($Model, 'delete');
-        
+
     }
 
     /**
@@ -234,6 +253,7 @@ final class PermissionableBehavior extends ModelBehavior {
     public function beforeFind( & $Model, $queryData) {
 
         if (
+        	$this->_disabled ||
             (
                 isset($queryData['permissionable']) &&
                 $queryData['permissionable'] == false
@@ -284,7 +304,7 @@ final class PermissionableBehavior extends ModelBehavior {
         ));
 
         return $queryData;
-        
+
     }
 
     /**
@@ -294,6 +314,12 @@ final class PermissionableBehavior extends ModelBehavior {
      * @return boolean
      */
     public function beforeSave( & $Model) {
+
+        if ($this->_disabled) {
+
+        	return true;
+
+        }
 
         $user_id	= Permissionable::getUserId();
         $group_id	= Permissionable::getGroupId();
@@ -309,7 +335,7 @@ final class PermissionableBehavior extends ModelBehavior {
         return (!empty($Model->id))
             ? $this->hasPermission($Model, 'write')
             : true;
-        
+
     }
 
     /**
@@ -341,7 +367,7 @@ final class PermissionableBehavior extends ModelBehavior {
                 "{$alias}.foreign_id"	=> $id
             )
         ));
-        
+
     }
 
     /**
@@ -353,7 +379,7 @@ final class PermissionableBehavior extends ModelBehavior {
     public function getPermissionAlias( & $Model) {
 
         return "{$Model->alias}Permission";
-        
+
     }
 
     /**
@@ -365,6 +391,12 @@ final class PermissionableBehavior extends ModelBehavior {
      * @return boolean
      */
     public function hasPermission( & $Model, $action = 'read', $id = null) {
+
+        if ($this->_disabled) {
+
+            return true;
+
+        }
 
         $user_id	= Permissionable::getUserId();
         $group_ids	= Permissionable::getGroupIds();
@@ -396,7 +428,31 @@ final class PermissionableBehavior extends ModelBehavior {
         ));
 
         return !empty($perm);
-        
+
+    }
+
+    /**
+     * disable Permissionable for the model
+     *
+     * @param  object   $Model
+     * @param  boolean  $disable
+     * @return null
+     */
+    public function disablePermissionable( & $Model, $disable = true) {
+
+        $this->_disabled = $disable;
+
+    }
+
+    /**
+     * getter to determine if Permissionable is enabled
+     *
+     * @return boolean
+     */
+    public function isPermissionableDisabled() {
+
+        return $this->_disabled;
+
     }
 
     /**
@@ -413,7 +469,7 @@ final class PermissionableBehavior extends ModelBehavior {
             : $this->_defaults;
 
         $this->settings[$Model->alias] = $config;
-        
+
     }
 
 }
