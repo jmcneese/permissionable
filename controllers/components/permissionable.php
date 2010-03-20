@@ -2,7 +2,7 @@
 
 /**
  * PermissionableComponent
- * 
+ *
  * Sets user info for PermissionableBehavior
  *
  * @package     permissionable
@@ -25,8 +25,16 @@ final class PermissionableComponent extends Component {
 		App::import('Lib', 'Permissionable.Permissionable');
 
 		/**
+		 * if the root user or root group are other than '1',
+		 * set them here here, with:
+		 *
+		 * Permissionable::setRootUserId(2);
+		 * Permissionable::setRootGroupId(2);
+		 */
+
+		/**
 		 * set user info here, with:
-		 * 
+		 *
 		 * Permissionable::setUserId(2);
 		 * Permissionable::setGroupId(2);
 		 * Permissionable::setGroupIds(array(3,4));

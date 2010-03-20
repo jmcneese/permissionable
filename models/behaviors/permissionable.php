@@ -121,16 +121,17 @@ final class PermissionableBehavior extends ModelBehavior {
     }
 
     /**
-     * helper to determine if the user is member of the root group
+     * helper to determine if the user
+     * is the root user or member of the root group
+     *
+     * This method is deprecated, and will be removed in a future release
      *
      * @return boolean
      */
     private function _isRoot() {
 
-        return (
-            Permissionable::getUserId() == 1 ||
-            in_array(1, Permissionable::getGroupIds())
-        );
+        trigger_error(__('Model->_isRoot() is deprecated. Please use the static method Permissionable::isRoot() instead.', true), E_USER_WARNING);
+        return Permissionable::isRoot();
 
     }
 
@@ -270,7 +271,7 @@ final class PermissionableBehavior extends ModelBehavior {
 
             return $queryData;
 
-        } elseif($this->_isRoot()) {
+        } elseif(Permissionable::isRoot()) {
 
             $this->_unbind($Model);
 
@@ -398,7 +399,7 @@ final class PermissionableBehavior extends ModelBehavior {
 
         }
 
-        $user_id	= Permissionable::getUserId();
+        $user_id		= Permissionable::getUserId();
         $group_ids	= Permissionable::getGroupIds();
         $id         = (empty($id)) ? $Model->id : $id;
 
@@ -409,7 +410,7 @@ final class PermissionableBehavior extends ModelBehavior {
 
             return false;
 
-        } elseif($this->_isRoot()) {
+        } elseif(Permissionable::isRoot()) {
 
             return true;
 

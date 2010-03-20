@@ -428,7 +428,7 @@ final class PermissionableTestCase extends CakeTestCase {
         $result2 = $this->Thing->read();
         $this->assertFalse(isset($result2['ThingPermission']));
 
-	}
+		}
 
     /**
      * Test setting disablePermissionable before deleting
@@ -460,8 +460,69 @@ final class PermissionableTestCase extends CakeTestCase {
         $result1 = $this->Thing->delete();
         $this->assertTrue($result1);
 
-	}
+		}
 
+    /**
+     * Test default root user id and root group id
+     *
+     * @return  void
+     */
+		public function testDefaultRootIds() {
+
+        $this->assertEqual(Permissionable::getRootUserId(), 1);
+        $this->assertEqual(Permissionable::getRootGroupId(), 1);
+
+		}
+
+    /**
+     * Test setting root user id and root group id
+     *
+     * @return  void
+     */
+		public function testSetRootIds() {
+
+        Permissionable::setRootUserId(2);
+        Permissionable::setRootGroupId(2);
+
+        $this->assertEqual(Permissionable::getRootUserId(), 2);
+        $this->assertEqual(Permissionable::getRootGroupId(), 2);
+
+		}
+
+    /**
+     * Test isRoot
+     *
+     * @return  void
+     */
+		public function testIsRootWithUuids() {
+
+        Permissionable::setUserId('2bceb022-344e-11df-bcba-e984d7a9c8ef');
+        Permissionable::setGroupId('441961bf-344e-11df-bcba-e984d7a9c8ef');
+        Permissionable::setGroupIds(array('441961bf-344e-11df-bcba-e984d7a9c8ef', '4c421828-344e-11df-bcba-e984d7a9c8ef'));
+
+        // User is Root user and in Root group
+        Permissionable::setRootUserId('2bceb022-344e-11df-bcba-e984d7a9c8ef');
+        Permissionable::setRootGroupId('441961bf-344e-11df-bcba-e984d7a9c8ef');
+
+        $this->assertTrue(Permissionable::isRoot());
+
+        // User is the Root user, but not in the Root group
+        Permissionable::setRootGroupId('de129dca-344e-11df-bcba-e984d7a9c8ef');
+        $this->assertTrue(Permissionable::isRoot());
+
+        // User is not the Root user, but is in the Root group
+        Permissionable::setRootUserId('b4fdc759-344f-11df-bcba-e984d7a9c8ef');
+        Permissionable::setRootGroupId('441961bf-344e-11df-bcba-e984d7a9c8ef');
+
+        $this->assertTrue(Permissionable::isRoot());
+
+        // User is neither the Root user nor in the Root group
+        Permissionable::setRootUserId('60741ba2-344f-11df-bcba-e984d7a9c8ef');
+        Permissionable::setRootGroupId('f2d4a9b2-344f-11df-bcba-e984d7a9c8ef');
+
+        $this->assertFalse(Permissionable::isRoot());
+
+		}
 }
 
 ?>
