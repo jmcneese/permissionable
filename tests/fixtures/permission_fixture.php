@@ -73,7 +73,7 @@ class PermissionFixture extends CakeTestFixture {
 			)
 		)
 	);
-
+	
 	/**
 	 * @var string
 	 */
