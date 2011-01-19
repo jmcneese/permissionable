@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PermissionSchema
+ * PermissionBitSchema
  *
  * Sets user info for PermissionableBehavior
  *
@@ -12,7 +12,7 @@
  * @license		Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  * @copyright	Copyright (c) 2009,2010 Joshua M. McNeese, Curtis J. Beeson
  */
-final class PermissionSchema extends CakeSchema {
+class PermissionBitSchema extends CakeSchema {
 
 	public $name = 'Permission';
 

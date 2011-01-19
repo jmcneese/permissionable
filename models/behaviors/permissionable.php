@@ -9,7 +9,7 @@
  * @subpackage  permissionable.models.behaviors
  * @author      Joshua McNeese <jmcneese@gmail.com>
  */
-final class PermissionableBehavior extends ModelBehavior {
+class PermissionableBehavior extends ModelBehavior {
 
     /**
      * Permission bits, don't touch!
@@ -50,7 +50,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  object	$Model
      * @return boolean
      */
-    private function _bind( & $Model, $conditions = array()) {
+    private function _bind(&$Model, $conditions = array()) {
 
         $this->_unbind($Model);
 
@@ -59,7 +59,7 @@ final class PermissionableBehavior extends ModelBehavior {
         return $Model->bindModel(array(
             'hasOne' => array(
                 $alias => array(
-                    'className'		=> 'Permissionable.Permission',
+                    'className'		=> 'Permissionable.PermissionBit',
                     'foreignKey'	=> 'foreign_id',
                     'dependent'		=> true,
                     'type'			=> 'INNER',
@@ -95,7 +95,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  string  $action
      * @return array
      */
-    private function _getPermissionQuery( & $Model, $action = 'read') {
+    private function _getPermissionQuery(&$Model, $action = 'read') {
 
         $alias	= $this->getPermissionAlias($Model);
         $action	= strtoupper($action);
@@ -103,17 +103,17 @@ final class PermissionableBehavior extends ModelBehavior {
 
         return array(
             // first check if "other" has the requested action
-            "$alias.perms & {$this->_getPermissionBit('OTHER_' . $action)} <> 0",
+            "$alias.perms&{$this->_getPermissionBit('OTHER_' . $action)} <> 0",
             // otherwise, if the user has a group tht the row has, && the
             // "group" action is allowed
             array(
-                "$alias.perms & {$this->_getPermissionBit('GROUP_' . $action)} <> 0",
+                "$alias.perms&{$this->_getPermissionBit('GROUP_' . $action)} <> 0",
                 "$alias.gid" => (count($gids) == 1) ? $gids[0] : $gids
             ),
             // otherwise, if the user is the row owner, && the "owner" action
             // is allowed
             array(
-                "$alias.perms & {$this->_getPermissionBit('OWNER_' . $action)} <> 0",
+                "$alias.perms&{$this->_getPermissionBit('OWNER_' . $action)} <> 0",
                 "$alias.uid" => Permissionable::getUserId()
             )
         );
@@ -141,7 +141,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  object	$Model
      * @return boolean
      */
-    private function _unbind( & $Model) {
+    private function _unbind(&$Model) {
 
         return $Model->unbindModel(array(
             'hasOne' => array(
@@ -167,7 +167,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  boolean $created
      * @return boolean
      */
-    public function afterSave( & $Model, $created) {
+    public function afterSave(&$Model, $created) {
 
     	if ($this->_disabled) {
 
@@ -229,7 +229,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  object $Model
      * @return boolean
      */
-    public function beforeDelete( & $Model) {
+    public function beforeDelete(&$Model) {
 
         if ($this->_disabled) {
 
@@ -251,7 +251,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  array   $queryData
      * @return mixed
      */
-    public function beforeFind( & $Model, $queryData) {
+    public function beforeFind(&$Model, $queryData) {
 
         if (
         	$this->_disabled ||
@@ -314,7 +314,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  object $Model
      * @return boolean
      */
-    public function beforeSave( & $Model) {
+    public function beforeSave(&$Model) {
 
         if ($this->_disabled) {
 
@@ -346,7 +346,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  mixed   $id
      * @return mixed
      */
-    public function getPermission( & $Model, $id = null) {
+    public function getPermission(&$Model, $id = null) {
 
         $id = (empty($id))
             ? $Model->id
@@ -377,9 +377,9 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  object  $Model
      * @return mixed
      */
-    public function getPermissionAlias( & $Model) {
+    public function getPermissionAlias(&$Model) {
 
-        return "{$Model->alias}Permission";
+        return "{$Model->alias}PermissionBit";
 
     }
 
@@ -391,7 +391,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  mixed   $id
      * @return boolean
      */
-    public function hasPermission( & $Model, $action = 'read', $id = null) {
+    public function hasPermission(&$Model, $action = 'read', $id = null) {
 
         if ($this->_disabled) {
 
@@ -399,7 +399,7 @@ final class PermissionableBehavior extends ModelBehavior {
 
         }
 
-        $user_id		= Permissionable::getUserId();
+        $user_id	= Permissionable::getUserId();
         $group_ids	= Permissionable::getGroupIds();
         $id         = (empty($id)) ? $Model->id : $id;
 
@@ -439,7 +439,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param  boolean  $disable
      * @return null
      */
-    public function disablePermissionable( & $Model, $disable = true) {
+    public function disablePermissionable(&$Model, $disable = true) {
 
         $this->_disabled = $disable;
 
@@ -463,7 +463,7 @@ final class PermissionableBehavior extends ModelBehavior {
      * @param   array   $config
      * @return  void
      */
-    public function setup( & $Model, $config = array()) {
+    public function setup(&$Model, $config = array()) {
 
         $config = (is_array($config) && !empty($config))
             ? Set::merge($this->_defaults, $config)

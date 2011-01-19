@@ -26,14 +26,14 @@ class Thing extends CakeTestModel {
  * @see         PermissionableBehavior
  * @author      Joshua McNeese <jmcneese@gmail.com>
  */
-final class PermissionableTestCase extends CakeTestCase {
+class PermissionableTestCase extends CakeTestCase {
 
     /**
      * @var     array
      */
     public $fixtures = array(
         'plugin.permissionable.thing',
-        'plugin.permissionable.permission'
+        'plugin.permissionable.permission_bit'
     );
 
     /**
@@ -127,7 +127,7 @@ final class PermissionableTestCase extends CakeTestCase {
         $this->assertTrue($result3);
 
         $result4 = $this->Thing->read();
-        $this->assertTrue(Set::matches('/ThingPermission[perms=480]', $result4));
+        $this->assertTrue(Set::matches('/ThingPermissionBit[perms=480]', $result4));
 
         $result5 = $this->Thing->save(array(
             'Thing' => array(
@@ -141,7 +141,7 @@ final class PermissionableTestCase extends CakeTestCase {
         $this->assertTrue($result5);
 
         $result6 = $this->Thing->read();
-        $this->assertTrue(Set::matches('/ThingPermission[perms=416]', $result6));
+        $this->assertTrue(Set::matches('/ThingPermissionBit[perms=416]', $result6));
 
         Permissionable::setUserId(null);
 
@@ -343,7 +343,7 @@ final class PermissionableTestCase extends CakeTestCase {
 
         $result1 = $this->Thing->getPermission();
         $this->assertTrue($result1);
-        $this->assertTrue(Set::matches('/ThingPermission[perms=480]', $result1));
+        $this->assertTrue(Set::matches('/ThingPermissionBit[perms=480]', $result1));
 
         $this->Thing->id = null;
         $result2 = $this->Thing->getPermission();

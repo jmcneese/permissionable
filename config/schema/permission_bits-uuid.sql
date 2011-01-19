@@ -1,4 +1,4 @@
-CREATE TABLE `permissions` (
+CREATE TABLE `permission_bits` (
   `id` char(36) NOT NULL,
   `model` varchar(32) NOT NULL,
   `foreign_id` char(36) NOT NULL,

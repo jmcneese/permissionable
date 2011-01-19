@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Permission Model Test Case
+ * PermissionBit Model Test Case
  *
  * @package     permissionable
  * @subpackage  permissionable.tests.cases.models
@@ -10,13 +10,13 @@
  * @license		Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  * @copyright	Copyright (c) 2009,2010 Joshua M. McNeese, Curtis J. Beeson
  */
-class PermissionTestCase extends CakeTestCase {
+class PermissionBitTestCase extends CakeTestCase {
 
 	/**
 	 * @var     array
 	 */
 	public $fixtures = array(
-		'plugin.permissionable.permission'
+		'plugin.permissionable.permission_bit'
 	);
 
 	/**
@@ -26,7 +26,7 @@ class PermissionTestCase extends CakeTestCase {
 
 		parent::start();
 
-		$this->Permission =& ClassRegistry::init('Permissionable.Permission');
+		$this->PermissionBit = ClassRegistry::init('Permissionable.PermissionBit');
 
 	}
 
@@ -37,7 +37,7 @@ class PermissionTestCase extends CakeTestCase {
 	 */
 	public function testInstanceSetup() {
 
-		$this->assertIsA($this->Permission, 'Model');
+		$this->assertIsA($this->PermissionBit, 'Model');
 
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Permission Fixture
+ * PermissionBit Fixture
  *
  * @package     permissionable
  * @subpackage  permissionable.tests.fixtures
@@ -9,7 +9,12 @@
  * @license		Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  * @copyright	Copyright (c) 2009,2010 Joshua M. McNeese, Curtis J. Beeson
  */
-class PermissionFixture extends CakeTestFixture {
+class PermissionBitFixture extends CakeTestFixture {
+
+	/**
+	 * @var string
+	 */
+	public $name = 'PermissionBit';
 
 	/**
 	 * @var array
@@ -73,11 +78,6 @@ class PermissionFixture extends CakeTestFixture {
 			)
 		)
 	);
-
-	/**
-	 * @var string
-	 */
-	public $name = 'Permission';
 
 }
 

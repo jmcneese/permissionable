@@ -9,7 +9,7 @@
  * @subpackage  permissionable.libs
  * @author      Joshua McNeese <jmcneese@gmail.com>
  */
-final class Permissionable {
+class Permissionable {
 
 	/**
 	 * @var mixed
