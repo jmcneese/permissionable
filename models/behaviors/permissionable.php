@@ -200,6 +200,8 @@ class PermissionableBehavior extends ModelBehavior {
 
         }
 
+		$this->_bind($Model);
+		
         if ($created) {
 
             $Model->{$alias}->create();
