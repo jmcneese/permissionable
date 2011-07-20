@@ -287,18 +287,21 @@ class PermissionableBehavior extends ModelBehavior {
 
         $alias = $this->getPermissionAlias($Model);
 
-        if (empty($queryData['fields'])) {
+        if(!in_array($Model->findQueryType, array('avg', 'count', 'first', 'last', 'max', 'min', 'sum'))) {
 
-            $queryData['fields'] = array("{$Model->alias}.*");
+            if (empty($queryData['fields'])) {
 
+                $queryData['fields'] = array("{$Model->alias}.*");
+
+            }
+
+            $queryData['fields'] = Set::merge(
+                    $queryData['fields'],
+                    array(
+                        "{$alias}.*"
+                    )
+            );
         }
-
-        $queryData['fields'] = Set::merge(
-                $queryData['fields'],
-                array(
-                    "{$alias}.*"
-                )
-        );
 
         $this->_bind($Model, array(
             "{$alias}.model" => "{$Model->alias}",
